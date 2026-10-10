@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cropguard – Login</title>
+  <style>
+    :root {
+      --green-900: #14532d;
+      --green-700: #15803d;
+      --green-500: #22c55e;
+      --green-100: #dcfce7;
+      --cream: #f7fbf4;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --error: #b91c1c;
+      --error-bg: #fee2e2;
+      --ok: #166534;
+      --ok-bg: #dcfce7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--green-100) 0%, var(--cream) 60%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(90deg, #14532d 0%, #15803d 55%, #16a34a 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-logo {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+    }
+    .logo { color: #fff; font-size: 1.5rem; font-weight: 700; letter-spacing: .5px; }
+    .logo span { color: var(--green-500); }
+    .lang-switch { display: flex; gap: 6px; }
+    .lang-switch button {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .lang-switch button:hover, .lang-switch button.active { background: var(--green-500); border-color: var(--green-500); }
+
+    main { display: flex; justify-content: center; padding: 40px 20px 60px; }
+    .box {
+      background: #fff;
+      width: 100%;
+      max-width: 430px;
+      border-radius: 18px;
+      padding: 30px 28px 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.1);
+    }
+    .box h1 { color: var(--green-900); font-size: 1.5rem; text-align: center; }
+    .box .sub { color: var(--muted); text-align: center; font-size: .95rem; margin: 6px 0 22px; }
+
+    .tabs { display: flex; background: var(--green-100); border-radius: 12px; padding: 4px; margin-bottom: 22px; }
+    .tab {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px;
+      border-radius: 9px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--green-900);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tab.active { background: var(--green-700); color: #fff; }
+
+    form { display: none; }
+    form.active { display: block; }
+    label { display: block; font-weight: 600; font-size: .92rem; margin: 14px 0 6px; color: var(--green-900); }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus { outline: none; border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(34,197,94,.2); }
+    .phone-row { display: flex; gap: 8px; }
+    .prefix {
+      padding: 12px 14px;
+      background: var(--green-100);
+      border-radius: 10px;
+      font-weight: 600;
+      color: var(--green-900);
+      white-space: nowrap;
+    }
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--green-700);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .submit:hover { background: var(--green-900); }
+
+    .msg {
+      display: none;
+      margin-bottom: 16px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: .93rem;
+    }
+    .msg.error { display: block; background: var(--error-bg); color: var(--error); }
+    .msg.ok { display: block; background: var(--ok-bg); color: var(--ok); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <a href="index.html" class="brand">
+        <div class="brand-logo">🌱</div>
+        <span class="logo">Crop<span>guard</span></span>
+      </a>
+      <div class="lang-switch">
+        <button type="button" data-lang="en">English</button>
+        <button type="button" data-lang="hi">हिन्दी</button>
+        <button type="button" data-lang="ta">தமிழ்</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="box">
+      <h1 data-i18n="login_title">Welcome to Cropguard</h1>
+      <p class="sub" data-i18n="login_sub">Log in or create an account to continue</p>
+
+      <div class="tabs">
+        <button type="button" class="tab active" id="tabLogin" data-i18n="tab_login">Login</button>
+        <button type="button" class="tab" id="tabRegister" data-i18n="tab_register">Register</button>
+      </div>
+
+      <div class="msg" id="msg"></div>
+
+      <!-- Login form -->
+      <form id="loginForm" class="active" autocomplete="on">
+        <label for="loginId" data-i18n="lbl_id">Username or phone number</label>
+        <input id="loginId" type="text" autocomplete="username" data-i18n-ph="ph_id" placeholder="Enter username or phone" />
+
+        <label for="loginPass" data-i18n="lbl_password">Password</label>
+        <input id="loginPass" type="password" autocomplete="current-password" data-i18n-ph="ph_password" placeholder="Enter password" />
+
+        <button type="submit" class="submit" data-i18n="btn_login">Login</button>
+      </form>
+
+      <!-- Register form -->
+      <form id="registerForm" autocomplete="on">
+        <label for="regPhone" data-i18n="lbl_phone">Phone number</label>
+        <div class="phone-row">
+          <div class="prefix">+91</div>
+          <input id="regPhone" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel-national" data-i18n-ph="ph_phone" placeholder="10-digit mobile number" />
+        </div>
+
+        <label for="regUser" data-i18n="lbl_username">Username</label>
+        <input id="regUser" type="text" maxlength="20" autocomplete="username" data-i18n-ph="ph_username" placeholder="Choose a username" />
+
+        <label for="regPass" data-i18n="lbl_new_password">Set a password</label>
+        <input id="regPass" type="password" autocomplete="new-password" data-i18n-ph="ph_new_password" placeholder="At least 6 characters" />
+
+        <label for="regPass2" data-i18n="lbl_confirm">Confirm password</label>
+        <input id="regPass2" type="password" autocomplete="new-password" data-i18n-ph="ph_confirm" placeholder="Re-enter password" />
+
+        <button type="submit" class="submit" data-i18n="btn_register">Create account</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const T = {
+      en: {
+        login_title: "Welcome to Cropguard",
+        login_sub: "Log in or create an account to continue",
+        tab_login: "Login",
+        tab_register: "Register",
+        lbl_id: "Username or phone number",
+        ph_id: "Enter username or phone",
+        lbl_phone: "Phone number",
+        ph_phone: "10-digit mobile number",
+        lbl_username: "Username",
+        ph_username: "Choose a username",
+        lbl_password: "Password",
+        ph_password: "Enter password",
+        lbl_new_password: "Set a password",
+        ph_new_password: "At least 6 characters",
+        lbl_confirm: "Confirm password",
+        ph_confirm: "Re-enter password",
+        btn_login: "Login",
+        btn_register: "Create account",
+        err_fill: "Please fill in all fields.",
+        err_phone: "Enter a valid 10-digit mobile number.",
+        err_username: "Username must be 3–20 letters, numbers or underscores.",
+        err_password: "Password must be at least 6 characters.",
+        err_match: "Passwords do not match.",
+        err_user_exists: "This username is already taken.",
+        err_phone_exists: "This phone number is already registered.",
+        err_invalid: "Incorrect username/phone or password.",
+        ok_registered: "Account created! You can now log in."
+      },
+      hi: {
+        login_title: "Cropguard में आपका स्वागत है",
+        login_sub: "आगे बढ़ने के लिए लॉग इन करें या नया खाता बनाएं",
+        tab_login: "लॉग इन",
+        tab_register: "रजिस्टर करें",
+        lbl_id: "यूज़रनेम या फ़ोन नंबर",
+        ph_id: "यूज़रनेम या फ़ोन नंबर दर्ज करें",
+        lbl_phone: "फ़ोन नंबर",
+        ph_phone: "10 अंकों का मोबाइल नंबर",
+        lbl_username: "यूज़रनेम",
+        ph_username: "यूज़रनेम चुनें",
+        lbl_password: "पासवर्ड",
+        ph_password: "पासवर्ड दर्ज करें",
+        lbl_new_password: "पासवर्ड सेट करें",
+        ph_new_password: "कम से कम 6 अक्षर",
+        lbl_confirm: "पासवर्ड की पुष्टि करें",
+        ph_confirm: "पासवर्ड दोबारा दर्ज करें",
+        btn_login: "लॉग इन",
+        btn_register: "खाता बनाएं",
+        err_fill: "कृपया सभी फ़ील्ड भरें।",
+        err_phone: "कृपया सही 10 अंकों का मोबाइल नंबर दर्ज करें।",
+        err_username: "यूज़रनेम 3–20 अक्षरों, अंकों या अंडरस्कोर का होना चाहिए।",
+        err_password: "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+        err_match: "पासवर्ड मेल नहीं खाते।",
+        err_user_exists: "यह यूज़रनेम पहले से लिया जा चुका है।",
+        err_phone_exists: "यह फ़ोन नंबर पहले से रजिस्टर है।",
+        err_invalid: "यूज़रनेम/फ़ोन या पासवर्ड गलत है।",
+        ok_registered: "खाता बन गया! अब आप लॉग इन कर सकते हैं।"
+      },
+      ta: {
+        login_title: "Cropguard-க்கு வரவேற்கிறோம்",
+        login_sub: "தொடர உள்நுழையவும் அல்லது புதிய கணக்கை உருவாக்கவும்",
+        tab_login: "உள்நுழை",
+        tab_register: "பதிவு செய்",
+        lbl_id: "பயனர்பெயர் அல்லது தொலைபேசி எண்",
+        ph_id: "பயனர்பெயர் அல்லது தொலைபேசி எண்ணை உள்ளிடவும்",
+        lbl_phone: "தொலைபேசி எண்",
+        ph_phone: "10 இலக்க மொபைல் எண்",
+        lbl_username: "பயனர்பெயர்",
+        ph_username: "பயனர்பெயரைத் தேர்வு செய்யவும்",
+        lbl_password: "கடவுச்சொல்",
+        ph_password: "கடவுச்சொல்லை உள்ளிடவும்",
+        lbl_new_password: "கடவுச்சொல்லை அமைக்கவும்",
+        ph_new_password: "குறைந்தது 6 எழுத்துகள்",
+        lbl_confirm: "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+        ph_confirm: "கடவுச்சொல்லை மீண்டும் உள்ளிடவும்",
+        btn_login: "உள்நுழை",
+        btn_register: "கணக்கை உருவாக்கு",
+        err_fill: "அனைத்து புலங்களையும் நிரப்பவும்.",
+        err_phone: "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்.",
+        err_username: "பயனர்பெயர் 3–20 எழுத்துகள், எண்கள் அல்லது அடிக்கோடு கொண்டிருக்க வேண்டும்.",
+        err_password: "கடவுச்சொல் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்.",
+        err_match: "கடவுச்சொற்கள் பொருந்தவில்லை.",
+        err_user_exists: "இந்த பயனர்பெயர் ஏற்கனவே பயன்படுத்தப்பட்டுள்ளது.",
+        err_phone_exists: "இந்த தொலைபேசி எண் ஏற்கனவே பதிவு செய்யப்பட்டுள்ளது.",
+        err_invalid: "பயனர்பெயர்/தொலைபேசி அல்லது கடவுச்சொல் தவறானது.",
+        ok_registered: "கணக்கு உருவாக்கப்பட்டது! இப்போது உள்நுழையலாம்."
+      }
+    };
+
+    /* ---------- storage helpers ---------- */
+    function load(key, fallback) {
+      try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+      catch (e) { return fallback; }
+    }
+    function save(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+    }
+    function getLang() {
+      try { return localStorage.getItem("cropguard_lang"); } catch (e) { return null; }
+    }
+
+    /* ---------- language ---------- */
+    let lang = getLang();
+    if (!lang || !T[lang]) {
+      // Language not chosen yet -> go pick it on the homepage first
+      window.location.replace("index.html");
+    }
+
+    // Already logged in -> go to the homepage
+    try {
+      if (localStorage.getItem("cropguard_session")) window.location.replace("index.html");
+    } catch (e) {}
+
+    let lastMsg = null; // so a shown message can be re-translated
+
+    function applyLanguage(l) {
+      lang = l;
+      try { localStorage.setItem("cropguard_lang", l); } catch (e) {}
+      document.documentElement.lang = l;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        const v = T[l][el.getAttribute("data-i18n")];
+        if (v) el.textContent = v;
+      });
+      document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+        const v = T[l][el.getAttribute("data-i18n-ph")];
+        if (v) el.placeholder = v;
+      });
+      document.querySelectorAll(".lang-switch button").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-lang") === l);
+      });
+      if (lastMsg) showMsg(lastMsg.key, lastMsg.type);
+    }
+
+    document.querySelectorAll(".lang-switch button").forEach(function (b) {
+      b.addEventListener("click", function () { applyLanguage(b.getAttribute("data-lang")); });
+    });
+
+    /* ---------- messages & tabs ---------- */
+    const msg = document.getElementById("msg");
+    function showMsg(key, type) {
+      lastMsg = { key: key, type: type };
+      msg.textContent = T[lang][key];
+      msg.className = "msg " + type;
+    }
+    function clearMsg() { lastMsg = null; msg.className = "msg"; msg.textContent = ""; }
+
+    const tabLogin = document.getElementById("tabLogin");
+    const tabRegister = document.getElementById("tabRegister");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    function showTab(which) {
+      clearMsg();
+      const isLogin = which === "login";
+      tabLogin.classList.toggle("active", isLogin);
+      tabRegister.classList.toggle("active", !isLogin);
+      loginForm.classList.toggle("active", isLogin);
+      registerForm.classList.toggle("active", !isLogin);
+    }
+    tabLogin.addEventListener("click", function () { showTab("login"); });
+    tabRegister.addEventListener("click", function () { showTab("register"); });
+
+    /* ---------- password hashing ---------- */
+    async function hashPassword(password, salt) {
+      const text = salt + ":" + password;
+      if (window.crypto && crypto.subtle) {
+        const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+        return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+      }
+      // Fallback for very old browsers
+      let h = 5381;
+      for (let i = 0; i < text.length; i++) h = ((h << 5) + h + text.charCodeAt(i)) | 0;
+      return "f" + (h >>> 0).toString(16);
+    }
+    function makeSalt() {
+      const arr = new Uint8Array(8);
+      if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(arr);
+      else for (let i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 256);
+      return Array.from(arr).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+    }
+
+    /* ---------- register ---------- */
+    document.getElementById("regPhone").addEventListener("input", function (e) {
+      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+    });
+
+    registerForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const phone = document.getElementById("regPhone").value.trim();
+      const username = document.getElementById("regUser").value.trim();
+      const pass = document.getElementById("regPass").value;
+      const pass2 = document.getElementById("regPass2").value;
+
+      if (!phone || !username || !pass || !pass2) return showMsg("err_fill", "error");
+      if (!/^[6-9]\d{9}$/.test(phone)) return showMsg("err_phone", "error");
+      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) return showMsg("err_username", "error");
+      if (pass.length < 6) return showMsg("err_password", "error");
+      if (pass !== pass2) return showMsg("err_match", "error");
+
+      const users = load("cropguard_users", {});
+      const key = username.toLowerCase();
+      if (users[key]) return showMsg("err_user_exists", "error");
+      for (const k in users) {
+        if (users[k].phone === phone) return showMsg("err_phone_exists", "error");
+      }
+
+      const salt = makeSalt();
+      users[key] = {
+        username: username,
+        phone: phone,
+        salt: salt,
+        hash: await hashPassword(pass, salt)
+      };
+      save("cropguard_users", users);
+
+      registerForm.reset();
+      showTab("login");
+      showMsg("ok_registered", "ok");
+      document.getElementById("loginId").value = username;
+    });
+
+    /* ---------- login ---------- */
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const id = document.getElementById("loginId").value.trim();
+      const pass = document.getElementById("loginPass").value;
+      if (!id || !pass) return showMsg("err_fill", "error");
+
+      const users = load("cropguard_users", {});
+      let user = users[id.toLowerCase()];
+      if (!user) {
+        for (const k in users) {
+          if (users[k].phone === id) { user = users[k]; break; }
+        }
+      }
+      if (!user) return showMsg("err_invalid", "error");
+
+      const hash = await hashPassword(pass, user.salt);
+      if (hash !== user.hash) return showMsg("err_invalid", "error");
+
+      try { localStorage.setItem("cropguard_session", user.username); } catch (err) {}
+      window.location.href = "index.html";
+    });
+
+    if (lang && T[lang]) applyLanguage(lang);
+  </script>
+
+</body>
+</html>

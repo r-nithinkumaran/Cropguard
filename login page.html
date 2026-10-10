@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cropguard – Protect Your Crops</title>
+  <style>
+    :root {
+      --green-900: #14532d;
+      --green-700: #15803d;
+      --green-500: #22c55e;
+      --green-100: #dcfce7;
+      --cream: #f7fbf4;
+      --text: #1f2937;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ---------- Top navigation ---------- */
+    header {
+      background: linear-gradient(90deg, #14532d 0%, #15803d 55%, #16a34a 100%);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      overflow: hidden;
+    }
+    .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-sub { color: #d1fae5; font-size: .85rem; }
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .92rem;
+      white-space: nowrap;
+    }
+    .profile-btn:hover { color: #bbf7d0; }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .logo {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: .5px;
+    }
+    .logo span { color: var(--green-500); }
+    .nav-buttons {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn {
+      color: #fff;
+      text-decoration: none;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: .92rem;
+      font-weight: 500;
+      transition: background .2s, transform .2s;
+    }
+    .btn:hover {
+      background: var(--green-500);
+      border-color: var(--green-500);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 70px;
+      background: linear-gradient(180deg, var(--green-100) 0%, var(--cream) 100%);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--green-900);
+      margin-bottom: 14px;
+    }
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .cta {
+      display: inline-block;
+      background: var(--green-700);
+      color: #fff;
+      padding: 14px 30px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background .2s;
+    }
+    .cta:hover { background: var(--green-900); }
+
+    /* ---------- Feature cards ---------- */
+    .features {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+    .features h2 {
+      text-align: center;
+      color: var(--green-900);
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+      text-decoration: none;
+      color: inherit;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.1);
+    }
+    .card .icon { font-size: 2rem; margin-bottom: 10px; }
+    .card h3 { color: var(--green-700); margin-bottom: 6px; }
+    .card p { color: var(--muted); font-size: .95rem; }
+
+    footer {
+      background: var(--green-900);
+      color: #cbd5c0;
+      text-align: center;
+      padding: 22px 20px;
+      font-size: .9rem;
+    }
+
+    /* ---------- Language picker ---------- */
+    .lang-btn {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .lang-btn:hover { background: var(--green-500); }
+    .right-group { display: flex; align-items: center; gap: 14px; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 40, 20, .75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      padding: 32px 28px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+    .modal .modal-icon { font-size: 2.6rem; }
+    .modal h2 { color: var(--green-900); margin: 8px 0 4px; font-size: 1.3rem; }
+    .modal p { color: var(--muted); font-size: .95rem; margin-bottom: 22px; }
+    .lang-option {
+      display: block;
+      width: 100%;
+      background: var(--green-100);
+      border: 2px solid transparent;
+      color: var(--green-900);
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .lang-option:hover {
+      background: var(--green-700);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .lang-option:last-child { margin-bottom: 0; }
+
+    @media (max-width: 640px) {
+      .nav { flex-wrap: wrap; }
+      .right-group { order: 2; }
+      .brand { order: 1; }
+      .nav-buttons { order: 3; flex-basis: 100%; }
+      .btn { padding: 7px 10px; font-size: .85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <a href="index.html" class="brand">
+        <div class="brand-logo">🌱</div>
+        <div>
+          <span class="logo">Crop<span>guard</span></span><br />
+          <span class="brand-sub" data-i18n="tagline">Smart Crop Protection</span>
+        </div>
+      </a>
+      <nav class="nav-buttons">
+        <a href="settings.html" class="btn">⚙️ <span data-i18n="nav_settings">Settings</span></a>
+        <a href="market-price.html" class="btn">💰 <span data-i18n="nav_market">View Market Price</span></a>
+        <a href="history.html" class="btn">🕒 <span data-i18n="nav_history">View History</span></a>
+        <a href="scan-plant.html" class="btn">📷 <span data-i18n="nav_scan">Scan Plant</span></a>
+        <a href="crop-info.html" class="btn">🌾 <span data-i18n="nav_crop">Crop Info</span></a>
+      </nav>
+      <div class="right-group">
+        <button class="lang-btn" id="langBtn" type="button" title="Language / भाषा / மொழி">🌐</button>
+        <button class="lang-btn" id="logoutBtn" type="button" title="Logout / लॉग आउट / வெளியேறு">🚪</button>
+        <a href="profile.html" class="profile-btn">
+          <div class="avatar">👤</div>
+          <span data-i18n="nav_profile">View Profile</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1 data-i18n="hero_title">Keep Your Crops Healthy with Cropguard</h1>
+    <p data-i18n="hero_text">Scan your plants, spot diseases early, check live market prices and get expert crop information — all in one place.</p>
+    <a href="scan-plant.html" class="cta" data-i18n="hero_cta">Scan a Plant Now</a>
+  </section>
+
+  <section class="features">
+    <h2 data-i18n="features_title">What you can do</h2>
+    <div class="grid">
+      <a class="card" href="scan-plant.html">
+        <div class="icon">📷</div>
+        <h3 data-i18n="card_scan_t">Scan Plant</h3>
+        <p data-i18n="card_scan_d">Take a photo of a leaf to detect diseases and pests.</p>
+      </a>
+      <a class="card" href="market-price.html">
+        <div class="icon">💰</div>
+        <h3 data-i18n="card_market_t">Market Price</h3>
+        <p data-i18n="card_market_d">Check the latest prices for your crops before you sell.</p>
+      </a>
+      <a class="card" href="crop-info.html">
+        <div class="icon">🌾</div>
+        <h3 data-i18n="card_crop_t">Crop Info</h3>
+        <p data-i18n="card_crop_d">Learn about growing seasons, soil needs and care tips.</p>
+      </a>
+      <a class="card" href="history.html">
+        <div class="icon">🕒</div>
+        <h3 data-i18n="card_hist_t">History</h3>
+        <p data-i18n="card_hist_d">Review your past scans and recommendations.</p>
+      </a>
+    </div>
+  </section>
+
+  <footer data-i18n="footer">© 2026 Cropguard. All rights reserved.</footer>
+
+  <!-- Language picker (shown on first visit) -->
+  <div class="modal-overlay" id="langModal">
+    <div class="modal">
+      <div class="modal-icon">🌐</div>
+      <h2>Choose your language</h2>
+      <p>अपनी भाषा चुनें · உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்</p>
+      <button class="lang-option" data-lang="en">English</button>
+      <button class="lang-option" data-lang="hi">हिन्दी</button>
+      <button class="lang-option" data-lang="ta">தமிழ்</button>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        tagline: "Smart Crop Protection",
+        nav_settings: "Settings",
+        nav_market: "View Market Price",
+        nav_history: "View History",
+        nav_scan: "Scan Plant",
+        nav_crop: "Crop Info",
+        nav_profile: "View Profile",
+        hero_title: "Keep Your Crops Healthy with Cropguard",
+        hero_text: "Scan your plants, spot diseases early, check live market prices and get expert crop information — all in one place.",
+        hero_cta: "Scan a Plant Now",
+        features_title: "What you can do",
+        card_scan_t: "Scan Plant",
+        card_scan_d: "Take a photo of a leaf to detect diseases and pests.",
+        card_market_t: "Market Price",
+        card_market_d: "Check the latest prices for your crops before you sell.",
+        card_crop_t: "Crop Info",
+        card_crop_d: "Learn about growing seasons, soil needs and care tips.",
+        card_hist_t: "History",
+        card_hist_d: "Review your past scans and recommendations.",
+        footer: "© 2026 Cropguard. All rights reserved."
+      },
+      hi: {
+        tagline: "स्मार्ट फसल सुरक्षा",
+        nav_settings: "सेटिंग्स",
+        nav_market: "बाज़ार भाव देखें",
+        nav_history: "इतिहास देखें",
+        nav_scan: "पौधा स्कैन करें",
+        nav_crop: "फसल की जानकारी",
+        nav_profile: "प्रोफ़ाइल देखें",
+        hero_title: "Cropguard के साथ अपनी फसलों को स्वस्थ रखें",
+        hero_text: "अपने पौधों को स्कैन करें, बीमारियों का जल्दी पता लगाएं, बाज़ार के ताज़ा भाव देखें और फसलों की विशेषज्ञ जानकारी पाएं — सब कुछ एक ही जगह।",
+        hero_cta: "अभी पौधा स्कैन करें",
+        features_title: "आप क्या कर सकते हैं",
+        card_scan_t: "पौधा स्कैन करें",
+        card_scan_d: "पत्ती की फोटो लेकर बीमारियों और कीटों का पता लगाएं।",
+        card_market_t: "बाज़ार भाव",
+        card_market_d: "बेचने से पहले अपनी फसलों के ताज़ा भाव देखें।",
+        card_crop_t: "फसल की जानकारी",
+        card_crop_d: "बुवाई के मौसम, मिट्टी की ज़रूरतों और देखभाल के सुझावों के बारे में जानें।",
+        card_hist_t: "इतिहास",
+        card_hist_d: "अपने पिछले स्कैन और सुझाव देखें।",
+        footer: "© 2026 Cropguard. सर्वाधिकार सुरक्षित।"
+      },
+      ta: {
+        tagline: "ஸ்மார்ட் பயிர் பாதுகாப்பு",
+        nav_settings: "அமைப்புகள்",
+        nav_market: "சந்தை விலை காண்க",
+        nav_history: "வரலாறு காண்க",
+        nav_scan: "செடியை ஸ்கேன் செய்க",
+        nav_crop: "பயிர் தகவல்",
+        nav_profile: "சுயவிவரம் காண்க",
+        hero_title: "Cropguard மூலம் உங்கள் பயிர்களை ஆரோக்கியமாக வைத்திருங்கள்",
+        hero_text: "உங்கள் செடிகளை ஸ்கேன் செய்யுங்கள், நோய்களை முன்கூட்டியே கண்டறியுங்கள், சந்தை விலைகளைச் சரிபார்த்து, பயிர் குறித்த நிபுணர் தகவல்களைப் பெறுங்கள் — அனைத்தும் ஒரே இடத்தில்.",
+        hero_cta: "இப்போதே செடியை ஸ்கேன் செய்யுங்கள்",
+        features_title: "நீங்கள் என்ன செய்யலாம்",
+        card_scan_t: "செடியை ஸ்கேன் செய்க",
+        card_scan_d: "இலையின் புகைப்படம் எடுத்து நோய்கள் மற்றும் பூச்சிகளைக் கண்டறியுங்கள்.",
+        card_market_t: "சந்தை விலை",
+        card_market_d: "விற்பதற்கு முன் உங்கள் பயிர்களின் சமீபத்திய விலையைப் பாருங்கள்.",
+        card_crop_t: "பயிர் தகவல்",
+        card_crop_d: "பயிரிடும் பருவம், மண் தேவைகள் மற்றும் பராமரிப்பு குறிப்புகளை அறியுங்கள்.",
+        card_hist_t: "வரலாறு",
+        card_hist_d: "உங்கள் கடந்த ஸ்கேன்கள் மற்றும் பரிந்துரைகளைப் பாருங்கள்.",
+        footer: "© 2026 Cropguard. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+      }
+    };
+
+    const modal = document.getElementById("langModal");
+
+    function applyLanguage(lang) {
+      const dict = translations[lang] || translations.en;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.textContent = dict[key];
+      });
+    }
+
+    function saveLanguage(lang) {
+      try { localStorage.setItem("cropguard_lang", lang); } catch (e) {}
+    }
+
+    function getSavedLanguage() {
+      try { return localStorage.getItem("cropguard_lang"); } catch (e) { return null; }
+    }
+
+    document.querySelectorAll(".lang-option").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const lang = btn.getAttribute("data-lang");
+        saveLanguage(lang);
+        applyLanguage(lang);
+        modal.classList.remove("show");
+        // After choosing a language, send new visitors to the login page
+        if (!isLoggedIn()) window.location.href = "login.html";
+      });
+    });
+
+    // Globe button lets the user change language later
+    document.getElementById("langBtn").addEventListener("click", function () {
+      modal.classList.add("show");
+    });
+
+    // On load: use saved language, or ask on first visit
+    const saved = getSavedLanguage();
+    function isLoggedIn() {
+      try { return !!localStorage.getItem("cropguard_session"); } catch (e) { return false; }
+    }
+
+    // Logout button
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      try { localStorage.removeItem("cropguard_session"); } catch (e) {}
+      window.location.href = "login.html";
+    });
+
+    if (saved && translations[saved]) {
+      applyLanguage(saved);
+      if (!isLoggedIn()) window.location.replace("login.html");
+    } else {
+      modal.classList.add("show");
+    }
+  </script>
+
+</body>
+</html>
