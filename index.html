@@ -270,6 +270,7 @@
       </nav>
       <div class="right-group">
         <button class="lang-btn" id="langBtn" type="button" title="Language / भाषा / மொழி">🌐</button>
+        <button class="lang-btn" id="logoutBtn" type="button" title="Logout / लॉग आउट / வெளியேறு">🚪</button>
         <a href="profile.html" class="profile-btn">
           <div class="avatar">👤</div>
           <span data-i18n="nav_profile">View Profile</span>
@@ -419,6 +420,8 @@
         saveLanguage(lang);
         applyLanguage(lang);
         modal.classList.remove("show");
+        // After choosing a language, send new visitors to the login page
+        if (!isLoggedIn()) window.location.href = "login.html";
       });
     });
 
@@ -429,8 +432,19 @@
 
     // On load: use saved language, or ask on first visit
     const saved = getSavedLanguage();
+    function isLoggedIn() {
+      try { return !!localStorage.getItem("cropguard_session"); } catch (e) { return false; }
+    }
+
+    // Logout button
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      try { localStorage.removeItem("cropguard_session"); } catch (e) {}
+      window.location.href = "login.html";
+    });
+
     if (saved && translations[saved]) {
       applyLanguage(saved);
+      if (!isLoggedIn()) window.location.replace("login.html");
     } else {
       modal.classList.add("show");
     }
