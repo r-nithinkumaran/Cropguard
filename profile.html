@@ -1,1 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cropguard – Profile</title>
+  <style>
+    :root {
+      --green-900: #14532d;
+      --green-700: #15803d;
+      --green-500: #22c55e;
+      --green-100: #dcfce7;
+      --cream: #f7fbf4;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --error: #b91c1c;
+      --error-bg: #fee2e2;
+      --ok: #166534;
+      --ok-bg: #dcfce7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--green-100) 0%, var(--cream) 60%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
 
+    header {
+      background: linear-gradient(90deg, #14532d 0%, #15803d 55%, #16a34a 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand-logo {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+    }
+    .logo { color: #fff; font-size: 1.5rem; font-weight: 700; letter-spacing: .5px; }
+    .logo span { color: var(--green-500); }
+    .nav-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .lang-switch { display: flex; gap: 6px; }
+    .lang-switch button, .nav-link {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: .9rem;
+      cursor: pointer;
+      text-decoration: none;
+      font-family: inherit;
+      transition: background .2s;
+    }
+    .lang-switch button:hover, .lang-switch button.active, .nav-link:hover {
+      background: var(--green-500);
+      border-color: var(--green-500);
+    }
+
+    main { display: flex; justify-content: center; padding: 36px 20px 60px; }
+    .box {
+      background: #fff;
+      width: 100%;
+      max-width: 520px;
+      border-radius: 18px;
+      padding: 30px 28px 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.1);
+    }
+    .top { text-align: center; margin-bottom: 24px; }
+    .big-avatar {
+      width: 84px; height: 84px; border-radius: 50%;
+      background: var(--green-700); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.3rem; font-weight: 700; margin: 0 auto 12px;
+      text-transform: uppercase;
+    }
+    .top h1 { color: var(--green-900); font-size: 1.5rem; }
+    .top .sub { color: var(--muted); font-size: .95rem; margin-top: 4px; }
+
+    h2 {
+      font-size: 1rem;
+      color: var(--green-900);
+      border-bottom: 2px solid var(--green-100);
+      padding-bottom: 6px;
+      margin: 22px 0 12px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .info-row .k { color: var(--muted); font-size: .9rem; }
+    .info-row .v { font-weight: 600; color: var(--text); word-break: break-all; text-align: right; }
+
+    label { display: block; font-weight: 600; font-size: .92rem; margin: 14px 0 6px; color: var(--green-900); }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #fff;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--green-500);
+      box-shadow: 0 0 0 3px rgba(34,197,94,.2);
+    }
+    .submit {
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: var(--green-700);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .submit:hover { background: var(--green-900); }
+    .secondary-row { display: flex; gap: 10px; margin-top: 12px; }
+    .secondary {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--green-700);
+      color: var(--green-700);
+      background: #fff;
+      font-size: .98rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+    .secondary:hover { background: var(--green-700); color: #fff; }
+
+    .msg { display: none; margin-top: 16px; padding: 11px 14px; border-radius: 10px; font-size: .93rem; }
+    .msg.error { display: block; background: var(--error-bg); color: var(--error); }
+    .msg.ok { display: block; background: var(--ok-bg); color: var(--ok); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <a href="index.html" class="brand">
+        <div class="brand-logo">🌱</div>
+        <span class="logo">Crop<span>guard</span></span>
+      </a>
+      <div class="nav-right">
+        <div class="lang-switch">
+          <button type="button" data-lang="en">English</button>
+          <button type="button" data-lang="hi">हिन्दी</button>
+          <button type="button" data-lang="ta">தமிழ்</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="box">
+      <div class="top">
+        <div class="big-avatar" id="avatarLetter">?</div>
+        <h1 data-i18n="title">My Profile</h1>
+        <p class="sub" data-i18n="sub">Your account details</p>
+      </div>
+
+      <h2 data-i18n="sec_account">Account details</h2>
+      <div class="info-row">
+        <span class="k" data-i18n="lbl_username">Username</span>
+        <span class="v" id="showUsername">—</span>
+      </div>
+      <div class="info-row">
+        <span class="k" data-i18n="lbl_phone">Phone number</span>
+        <span class="v" id="showPhone">—</span>
+      </div>
+
+      <h2 data-i18n="sec_location">Location</h2>
+      <form id="profileForm">
+        <label for="stateSelect" data-i18n="lbl_state">State</label>
+        <select id="stateSelect"></select>
+
+        <label for="cityInput" data-i18n="lbl_city">City / Town</label>
+        <input id="cityInput" type="text" maxlength="60" data-i18n-ph="ph_city" placeholder="Enter your city or town" />
+
+        <button type="submit" class="submit" data-i18n="btn_save">Save profile</button>
+      </form>
+
+      <div class="msg" id="msg"></div>
+
+      <div class="secondary-row">
+        <a href="index.html" class="secondary" data-i18n="btn_home">Back to home</a>
+        <button type="button" class="secondary" id="logoutBtn" data-i18n="btn_logout">Logout</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const T = {
+      en: {
+        title: "My Profile",
+        sub: "Your account details",
+        sec_account: "Account details",
+        sec_location: "Location",
+        lbl_username: "Username",
+        lbl_phone: "Phone number",
+        lbl_state: "State",
+        select_state: "Select your state",
+        lbl_city: "City / Town",
+        ph_city: "Enter your city or town",
+        btn_save: "Save profile",
+        btn_home: "Back to home",
+        btn_logout: "Logout",
+        err_state: "Please select your state.",
+        err_city: "Please enter your city or town.",
+        ok_saved: "Profile saved!"
+      },
+      hi: {
+        title: "मेरी प्रोफ़ाइल",
+        sub: "आपके खाते की जानकारी",
+        sec_account: "खाते का विवरण",
+        sec_location: "स्थान",
+        lbl_username: "यूज़रनेम",
+        lbl_phone: "फ़ोन नंबर",
+        lbl_state: "राज्य",
+        select_state: "अपना राज्य चुनें",
+        lbl_city: "शहर / कस्बा",
+        ph_city: "अपना शहर या कस्बा दर्ज करें",
+        btn_save: "प्रोफ़ाइल सहेजें",
+        btn_home: "होम पर वापस जाएं",
+        btn_logout: "लॉग आउट",
+        err_state: "कृपया अपना राज्य चुनें।",
+        err_city: "कृपया अपना शहर या कस्बा दर्ज करें।",
+        ok_saved: "प्रोफ़ाइल सहेज ली गई!"
+      },
+      ta: {
+        title: "என் சுயவிவரம்",
+        sub: "உங்கள் கணக்கு விவரங்கள்",
+        sec_account: "கணக்கு விவரங்கள்",
+        sec_location: "இருப்பிடம்",
+        lbl_username: "பயனர்பெயர்",
+        lbl_phone: "தொலைபேசி எண்",
+        lbl_state: "மாநிலம்",
+        select_state: "உங்கள் மாநிலத்தைத் தேர்ந்தெடுக்கவும்",
+        lbl_city: "நகரம் / ஊர்",
+        ph_city: "உங்கள் நகரம் அல்லது ஊரை உள்ளிடவும்",
+        btn_save: "சுயவிவரத்தைச் சேமி",
+        btn_home: "முகப்புக்குத் திரும்பு",
+        btn_logout: "வெளியேறு",
+        err_state: "உங்கள் மாநிலத்தைத் தேர்ந்தெடுக்கவும்.",
+        err_city: "உங்கள் நகரம் அல்லது ஊரை உள்ளிடவும்.",
+        ok_saved: "சுயவிவரம் சேமிக்கப்பட்டது!"
+      }
+    };
+
+    // [English, Hindi, Tamil] — the English name is what gets saved
+    const STATES = [
+      ["Andhra Pradesh", "आंध्र प्रदेश", "ஆந்திரப் பிரதேசம்"],
+      ["Arunachal Pradesh", "अरुणाचल प्रदेश", "அருணாசலப் பிரதேசம்"],
+      ["Assam", "असम", "அசாம்"],
+      ["Bihar", "बिहार", "பீகார்"],
+      ["Chhattisgarh", "छत्तीसगढ़", "சத்தீஸ்கர்"],
+      ["Goa", "गोवा", "கோவா"],
+      ["Gujarat", "गुजरात", "குஜராத்"],
+      ["Haryana", "हरियाणा", "ஹரியானா"],
+      ["Himachal Pradesh", "हिमाचल प्रदेश", "இமாச்சலப் பிரதேசம்"],
+      ["Jharkhand", "झारखंड", "ஜார்க்கண்ட்"],
+      ["Karnataka", "कर्नाटक", "கர்நாடகா"],
+      ["Kerala", "केरल", "கேரளா"],
+      ["Madhya Pradesh", "मध्य प्रदेश", "மத்தியப் பிரதேசம்"],
+      ["Maharashtra", "महाराष्ट्र", "மகாராஷ்டிரா"],
+      ["Manipur", "मणिपुर", "மணிப்பூர்"],
+      ["Meghalaya", "मेघालय", "மேகாலயா"],
+      ["Mizoram", "मिज़ोरम", "மிசோரம்"],
+      ["Nagaland", "नागालैंड", "நாகாலாந்து"],
+      ["Odisha", "ओडिशा", "ஒடிசா"],
+      ["Punjab", "पंजाब", "பஞ்சாப்"],
+      ["Rajasthan", "राजस्थान", "ராஜஸ்தான்"],
+      ["Sikkim", "सिक्किम", "சிக்கிம்"],
+      ["Tamil Nadu", "तमिलनाडु", "தமிழ்நாடு"],
+      ["Telangana", "तेलंगाना", "தெலங்கானா"],
+      ["Tripura", "त्रिपुरा", "திரிபுரா"],
+      ["Uttar Pradesh", "उत्तर प्रदेश", "உத்தரப் பிரதேசம்"],
+      ["Uttarakhand", "उत्तराखंड", "உத்தராகண்ட்"],
+      ["West Bengal", "पश्चिम बंगाल", "மேற்கு வங்காளம்"],
+      ["Andaman and Nicobar Islands", "अंडमान और निकोबार द्वीप समूह", "அந்தமான் நிக்கோபார் தீவுகள்"],
+      ["Chandigarh", "चंडीगढ़", "சண்டிகர்"],
+      ["Dadra and Nagar Haveli and Daman and Diu", "दादरा और नगर हवेली और दमन और दीव", "தாத்ரா நகர் ஹவேலி மற்றும் டாமன் டையூ"],
+      ["Delhi", "दिल्ली", "டெல்லி"],
+      ["Jammu and Kashmir", "जम्मू और कश्मीर", "ஜம்மு காஷ்மீர்"],
+      ["Ladakh", "लद्दाख", "லடாக்"],
+      ["Lakshadweep", "लक्षद्वीप", "லட்சத்தீவு"],
+      ["Puducherry", "पुडुचेरी", "புதுச்சேரி"]
+    ];
+
+    /* ---------- storage helpers ---------- */
+    function load(key, fallback) {
+      try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+      catch (e) { return fallback; }
+    }
+    function save(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+    }
+    function getItem(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+
+    /* ---------- guards: language chosen + logged in ---------- */
+    let lang = getItem("cropguard_lang");
+    if (!lang || !T[lang]) window.location.replace("index.html");
+
+    const sessionName = getItem("cropguard_session");
+    if (!sessionName) window.location.replace("login.html");
+
+    const users = load("cropguard_users", {});
+    const userKey = (sessionName || "").toLowerCase();
+    const user = users[userKey];
+    if (sessionName && !user) {
+      // Session points to an account that no longer exists
+      try { localStorage.removeItem("cropguard_session"); } catch (e) {}
+      window.location.replace("login.html");
+    }
+
+    /* ---------- fill in account details ---------- */
+    if (user) {
+      document.getElementById("showUsername").textContent = user.username;
+      document.getElementById("showPhone").textContent = "+91 " + user.phone;
+      document.getElementById("avatarLetter").textContent = user.username.charAt(0);
+      document.getElementById("cityInput").value = user.city || "";
+    }
+
+    /* ---------- state dropdown ---------- */
+    const stateSelect = document.getElementById("stateSelect");
+    const langIndex = { en: 0, hi: 1, ta: 2 };
+
+    function buildStates() {
+      const current = stateSelect.value || (user && user.state) || "";
+      stateSelect.innerHTML = "";
+      const first = document.createElement("option");
+      first.value = "";
+      first.textContent = T[lang].select_state;
+      stateSelect.appendChild(first);
+      STATES.forEach(function (s) {
+        const o = document.createElement("option");
+        o.value = s[0];
+        o.textContent = s[langIndex[lang]];
+        stateSelect.appendChild(o);
+      });
+      stateSelect.value = current;
+    }
+
+    /* ---------- language ---------- */
+    let lastMsg = null;
+    const msg = document.getElementById("msg");
+
+    function showMsg(key, type) {
+      lastMsg = { key: key, type: type };
+      msg.textContent = T[lang][key];
+      msg.className = "msg " + type;
+    }
+
+    function applyLanguage(l) {
+      lang = l;
+      try { localStorage.setItem("cropguard_lang", l); } catch (e) {}
+      document.documentElement.lang = l;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        const v = T[l][el.getAttribute("data-i18n")];
+        if (v) el.textContent = v;
+      });
+      document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+        const v = T[l][el.getAttribute("data-i18n-ph")];
+        if (v) el.placeholder = v;
+      });
+      document.querySelectorAll(".lang-switch button").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-lang") === l);
+      });
+      buildStates();
+      if (lastMsg) showMsg(lastMsg.key, lastMsg.type);
+    }
+
+    document.querySelectorAll(".lang-switch button").forEach(function (b) {
+      b.addEventListener("click", function () { applyLanguage(b.getAttribute("data-lang")); });
+    });
+
+    /* ---------- save profile ---------- */
+    document.getElementById("profileForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const state = stateSelect.value;
+      const city = document.getElementById("cityInput").value.trim();
+
+      if (!state) return showMsg("err_state", "error");
+      if (!city) return showMsg("err_city", "error");
+
+      const all = load("cropguard_users", {});
+      if (!all[userKey]) return;
+      all[userKey].state = state;
+      all[userKey].city = city;
+      save("cropguard_users", all);
+      showMsg("ok_saved", "ok");
+    });
+
+    /* ---------- logout ---------- */
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      try { localStorage.removeItem("cropguard_session"); } catch (e) {}
+      window.location.href = "login.html";
+    });
+
+    if (lang && T[lang]) applyLanguage(lang);
+  </script>
+
+</body>
+</html>
